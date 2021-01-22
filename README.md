@@ -1,6 +1,6 @@
-# Belly Button Biodiversity
+# Belly Button Biodiversity Dashboard
 
-Find the completed Belly Button Biodiversity website here: [Belly Button Biodiversity](https://sarakim-sy.github.io/plotly-challenge/)
+Find the completed Belly Button Biodiversity dashboard here: [Belly Button Biodiversity](https://sarakim-sy.github.io/plotly-challenge/)
 
 In this repository, an interactive dashboard to explore the [Belly Button Biodiversity dataset](http://robdunnlab.com/projects/belly-button-biodiversity/), which catalogs the microbes that colonize human navels, was created.
 
