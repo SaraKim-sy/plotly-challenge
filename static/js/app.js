@@ -85,6 +85,54 @@ function displayDemographic(id) {
 
 };
 
+// Optional: function to create a gauge chart
+function createGuage(id) {
+    d3.json('data/samples.json').then(data => {
+        var selected = data.metadata.filter(individual => individual.id == id)[0];
+
+        // Test
+        console.log(selected)
+
+        var data = [
+            {
+              type: "indicator",
+              mode: "gauge+number",
+              value: selected.wfreq,
+              title: { text: "Belly Button Washing Frequency<br>Scrubs per Week<br>", 
+                        font: { size: 20, color: "black" } 
+                    },
+              gauge: {
+                axis: { range: [null, 9], tickwidth: 1, tickcolor: "#E73F64" },
+                bar: { color: "#E73F64" },
+                bgcolor: "white",
+                borderwidth: 0.5,
+                bordercolor: "ivory",
+                steps: [
+                  { range: [0, 1], color: "#E9DBF0" },
+                  { range: [1, 2], color: "#ddb7e8" },
+                  { range: [2, 3], color: "#d292e0" },
+                  { range: [3, 4], color: "#cc80dc" },
+                  { range: [4, 5], color: "#c66ed7" },
+                  { range: [5, 6], color: "#ba49cf" },
+                  { range: [6, 7], color: "#af25c7" },
+                  { range: [7, 8], color: "#a912c3" },
+                  { range: [8, 9], color: "#a300bf" }
+                ],
+              }
+            }
+          ];
+          
+          var layout = {
+            width: 500,
+            height: 400,
+            margin: { t: 25, r: 25, l: 25, b: 25 },
+            font: { color: "#E73F64", family: "Arial" }
+          };
+          
+          Plotly.newPlot('gauge', data, layout);
+    })
+}
+
 
 
 
@@ -92,7 +140,7 @@ function displayDemographic(id) {
 createBar(940);
 createBubble(940);
 displayDemographic(940);
-
+createGuage(940);
 // function optionChanged(id) {
 
 // }
