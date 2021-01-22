@@ -21,6 +21,7 @@ d3.json('data/samples.json').then(data => {
     displayDemographic(firstId);
     createGuage(firstId);
  });
+ 
 
 // Function called by DOM changes
 function optionChanged(id) {
