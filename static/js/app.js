@@ -1,4 +1,40 @@
-// Step1: Plotly - function to create a horizontal bar chart 
+// dropdown menu
+let dropdownMenu = d3.select("#selDataset");
+
+d3.json('data/samples.json').then(data => { 
+
+    // List of Test Subject IDs
+    let idOptions = data.names
+
+    // Populate dropdowns selections
+    idOptions.forEach( id => dropdownMenu.append("option").text(id) );
+
+    // Look for the first id to display in the first page
+    firstId = idOptions[0]
+
+    // Test
+    console.log(firstId);
+
+    // Create charts and demographic information for the first page
+    createBar(firstId)
+    createBubble(firstId);
+    displayDemographic(firstId);
+    createGuage(firstId);
+
+ });
+
+// Function called by DOM changes
+function optionChanged() {
+
+    let id = dropdownMenu.property("value");
+
+    createBar(id);
+    createBubble(id);
+    displayDemographic(id);
+    createGuage(id);
+};
+
+// Plotly - function to create a horizontal bar chart 
 function createBar(id) {
 
     d3.json('data/samples.json').then(data => {
@@ -23,7 +59,7 @@ function createBar(id) {
         var data = [trace1];
 
         var layout = {
-            title: `Top 10 OTUs Found in Individual id ${id}`,
+            title: `Top 10 OTUs Found in Test Subject ID No.${id}`,
             font:{
                 family: 'Raleway, sans-serif'
               }
@@ -34,7 +70,7 @@ function createBar(id) {
             
 };
 
-// Step1: Plotly - function to create a bubble chart
+// Plotly - function to create a bubble chart
 function createBubble(id) {
     
     d3.json('data/samples.json').then(data => {
@@ -50,6 +86,7 @@ function createBubble(id) {
         var trace1 = {
             x: otuIds,
             y: sampleValues,
+            text: labels,
             mode: 'markers',
             marker: {
                 size: sampleValues,
@@ -77,12 +114,16 @@ function displayDemographic(id) {
         console.log(selected);
 
     var panelBody = d3.select("#sample-metadata");
+    
+    // To get the new panel with selected id data, clear the panel
+    panelBody.html("");
+    
+    // Use `Object.entries` and d3 to append <p> and update value per each key and value
     Object.entries(selected).forEach( ([key, value]) => {
         var row = panelBody.append("p");
         row.text(`${key}: ${value}`);
     });
     });
-
 };
 
 // Optional: function to create a gauge chart
@@ -105,8 +146,8 @@ function createGuage(id) {
                 axis: { range: [null, 9], tickwidth: 1, tickcolor: "#E73F64" },
                 bar: { color: "#E73F64" },
                 bgcolor: "white",
-                borderwidth: 0.5,
-                bordercolor: "ivory",
+                borderwidth: 1,
+                bordercolor: "a300bf",
                 steps: [
                   { range: [0, 1], color: "#E9DBF0" },
                   { range: [1, 2], color: "#ddb7e8" },
@@ -123,24 +164,11 @@ function createGuage(id) {
           ];
           
           var layout = {
-            width: 500,
-            height: 400,
             margin: { t: 25, r: 25, l: 25, b: 25 },
-            font: { color: "#E73F64", family: "Arial" }
+            font: { color: "#a300bf", family: "Arial" }
           };
           
           Plotly.newPlot('gauge', data, layout);
     })
 }
 
-
-
-
-
-createBar(940);
-createBubble(940);
-displayDemographic(940);
-createGuage(940);
-// function optionChanged(id) {
-
-// }
