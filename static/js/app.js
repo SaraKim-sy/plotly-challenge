@@ -20,14 +20,10 @@ d3.json('data/samples.json').then(data => {
     createBubble(firstId);
     displayDemographic(firstId);
     createGuage(firstId);
-
  });
 
 // Function called by DOM changes
-function optionChanged() {
-
-    let id = dropdownMenu.property("value");
-
+function optionChanged(id) {
     createBar(id);
     createBubble(id);
     displayDemographic(id);
@@ -60,9 +56,11 @@ function createBar(id) {
 
         var layout = {
             title: `Top 10 OTUs Found in Test Subject ID No.${id}`,
+            xaxis: {title: "Value"},
             font:{
                 family: 'Raleway, sans-serif'
               }
+
             };
 
         Plotly.newPlot("bar", data, layout);
@@ -97,7 +95,9 @@ function createBubble(id) {
         var data = [trace1];
 
         var layout = {
-            xaxis: { title: "OTU ID"}
+            title : `OTUs Found in Test Subject ID No.${id}`, 
+            xaxis: { title: "OTU ID" },
+            yaxis: { title: "Value" }
         };
 
         Plotly.newPlot("bubble", data, layout);
@@ -169,6 +169,6 @@ function createGuage(id) {
           };
           
           Plotly.newPlot('gauge', data, layout);
-    })
-}
+    });
+};
 
